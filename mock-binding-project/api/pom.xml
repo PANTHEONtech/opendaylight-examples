@@ -11,9 +11,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.opendaylight.mdsal</groupId>
-    <artifactId>binding-parent</artifactId>
-    <version>13.0.4</version>
+    <groupId>org.opendaylight.yangtools</groupId>
+    <artifactId>binding-bundle-parent</artifactId>
+    <version>14.0.1-SNAPSHOT</version>
     <relativePath/>
   </parent>
 
