@@ -1,0 +1,53 @@
+module device {
+    namespace "urn:opendaylight:params:xml:ns:yang:device";
+    prefix "device";
+    yang-version 1.1;
+
+    organization "Pantheon Tech";
+    contact "kostiantyn.karakata@pantheon.tech";
+    description "YANG model for a network device.";
+
+    revision "2025-06-11" {
+        description "Initial version with MAC address, IP address, and hostname.";
+    }
+
+    typedef mac-address {
+        type string {
+            pattern '([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}';
+        }
+        description "MAC address in the format XX:XX:XX:XX:XX:XX.";
+    }
+
+    typedef ipv4-address {
+        type string {
+            pattern
+                '((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}'
+                + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)';
+        }
+        description "IPv4 address in dotted decimal notation.";
+    }
+
+    container device {
+        description "Represents a network device.";
+
+        leaf hostname {
+            type string;
+            description "The hostname of the device.";
+        }
+
+        leaf mac-address {
+            type mac-address;
+            description "The MAC address of the device.";
+        }
+
+        leaf ip-address {
+            type ipv4-address;
+            description "The IPv4 address assigned to the device.";
+        }
+
+        leaf location {
+            type string;
+            description "Physical or logical location of the device.";
+        }
+    }
+}
