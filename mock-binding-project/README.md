@@ -107,7 +107,7 @@ Add the dependency and rebuild the project:
  <dependency>
      <groupId>org.opendaylight.netconf</groupId>
      <artifactId>odl-restconf-nb</artifactId>
-     <version>8.0.3</version>
+     <version>8.0.7</version>
      <classifier>features</classifier>
      <type>xml</type>
      <scope>runtime</scope>
