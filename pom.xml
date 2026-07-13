@@ -24,6 +24,9 @@
 
     <modules>
         <module>mock-binding-project</module>
+        <!-- Bump mock mock-binding-project to latest ODL and enable example-filter (already more recents version)
+        <module>example-filter</module>
+         -->
     </modules>
 
 </project>
