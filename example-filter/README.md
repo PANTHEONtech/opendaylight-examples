@@ -218,18 +218,12 @@ shown only for placement context):
 
 ## Build & deploy
 
-> **Prerequisite:** `<aaa-checkout>` must contain the following AAA-307 commits, and be built
-> locally — published `aaa-shiro` 0.23.3-SNAPSHOT jars predate all of them:
->
-> - "Refactor Oauth2ProxyHeaderToken parsing" ([Gerrit 123005](https://git.opendaylight.org/gerrit/c/aaa/+/123005)) —
->   without it this project does not compile (`Oauth2ProxyHeaderParser` doesn't exist yet)
-> - "Expose Oauth2ProxyHeaderParser as OSGi service" (Change-Id `Ia94beee2d61a2d06c3afffcf4ef666cf5be8fe8b`) —
->   without it forwarded-header authentication stays fail-closed at runtime (no service to look up)
-> - "Apply Oauth2ProxyHeaderFilter config instantly" (Change-Id `Icc7d068b05b2c31b0b4acc098e5ca7b15f0380ce`)
-> - "Rename OAuth2 FilterConfig to ParserConfig" (Change-Id `I2df3c95cd87690db3a78789ac662c4537500d4fc`) —
->   the one with compile impact here: `Oauth2ProxyHeaderFilterConfig` was renamed to
->   `Oauth2ProxyHeaderParserConfig`, which this project's tests reference directly
-> - "Document pluggable third-party filters" (Change-Id `I3651a84da502d616bfd2a3d71d07f9cd591b7a5d`)
+> **Prerequisite:** this project needs the AAA-307/AAA-308 work (`Oauth2ProxyHeaderParser`,
+> `Oauth2ProxyHeaderParserConfig`, the pluggable-filter dev-guide section) — all of it has since
+> been merged into aaa's `master`, so any reasonably current checkout has it. If your local
+> `~/.m2` still has an older published `aaa-shiro` snapshot that predates the merge, build
+> `<aaa-checkout>` locally first (step 2 below) so the artifacts you deploy against actually carry
+> it.
 
 ```bash
 # 1. build this project
