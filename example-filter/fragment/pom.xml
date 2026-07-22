@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2026 PANTHEON.tech, s.r.o. and others.  All rights reserved.
+
+ This program and the accompanying materials are made available under the
+ terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ and is available at http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.opendaylight.odlparent</groupId>
+        <artifactId>bundle-parent</artifactId>
+        <version>14.3.1</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>tech.pantheon.testfilter</groupId>
+    <artifactId>testfilter-fragment</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+    <name>ODL :: testfilter :: ${project.artifactId}</name>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.opendaylight.aaa</groupId>
+                <artifactId>aaa-artifacts</artifactId>
+                <!-- FIXME switch to 0.23.3 when released -->
+                <version>0.23.3-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jdt</groupId>
+            <artifactId>org.eclipse.jdt.annotation</artifactId>
+        </dependency>
+        <!-- Oauth2ProxyHeaderToken, ODLPrincipalImpl -->
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-shiro</artifactId>
+        </dependency>
+        <!-- ODLPrincipal -->
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>aaa-shiro-api</artifactId>
+        </dependency>
+        <!-- org.apache.shiro.* -->
+        <dependency>
+            <groupId>org.opendaylight.aaa</groupId>
+            <artifactId>repackaged-shiro</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.pantheon.testfilter</groupId>
+            <artifactId>testfilter-config</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Name>${project.groupId}.${project.artifactId}</Bundle-Name>
+                        <!-- Attach to the aaa-shiro bundle so that Shiro's reflection-based instantiation
+                             (Class.forName under the host classloader) can see TestFilter/TestRealm. -->
+                        <Fragment-Host>org.opendaylight.aaa.shiro</Fragment-Host>
+                        <!-- Host-internal packages (filters, realm, principal) are reachable through the host
+                             classloader once attached. org.opendaylight.aaa.shiro.principal is not exported by
+                             the host, so a generated Import-Package for it would make the fragment
+                             unresolvable. -->
+                        <Import-Package>
+                            !org.opendaylight.aaa.shiro.*,
+                            tech.pantheon.testfilter.config,
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
